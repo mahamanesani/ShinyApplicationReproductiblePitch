@@ -1,0 +1,55 @@
+---
+title: "Shiny application presentation"
+author: "Mahamane Sani Ibrahim"
+date: "07/12/2020"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+- The application allows to predict *child height* given his *gender* and parents *heights*
+- We are using the *Galton Families* dataset to perform a linear regression.
+
+## List of packages used to build thi app
+- HistData
+- GaltonFamilies
+- dplyr
+- ggplot2
+
+```{r,echo=TRUE}
+library(shiny)
+library(HistData)
+data(GaltonFamilies)
+library(dplyr)
+library(ggplot2)
+```
+
+
+## Data processing
+
+- We convert inches to cm
+
+```{r,echo=TRUE}
+galtons<-GaltonFamilies
+galtons$father<-galtons$father*2.54
+galtons$mother<-galtons$mother*2.54
+galtons$childHeight<-galtons$childHeight*2.54
+
+```
+
+## Exploratoring the dataset
+
+```{r,echo=TRUE}
+summary(galtons)
+```
+
+## Linear Model
+- We perform a linear regression of the *childheight* against the independant variable *father height*, *mother height* and child *gender*
+
+```{r,echo=TRUE}
+fit<-lm(childHeight~father+mother+gender,data=galtons)
+summary(fit)
+```
